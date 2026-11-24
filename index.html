@@ -452,7 +452,7 @@
                             Odbierz -10% na pierwszy drop
                         </h2>
                         <p class="text-sm text-lavender max-w-lg leading-relaxed">
-                            Zapisz się do newslettera <span class="text-white font-semibold">vapemajster.pl</span> i dostawaj info o świeżych smakach jednorazówek, limitowanych liquidach i tajnych kodach rabatowych (sprawdź kod <strong class="text-royalGold">MAJSTER10</strong> w kasie!).
+                            Zapisz się do newslettera <span class="text-white font-semibold">vapemajster.pl</span> i dostawaj info o świeżych smakach jednorazówek, limitowanych liquidach i tajnych kodach rabatowych.
                         </p>
                     </div>
                     <div class="lg:col-span-5">
@@ -892,7 +892,7 @@
                         <!-- Kod rabatowy -->
                         <div class="mb-5 pb-5 border-b border-borderPurple">
                             <div class="flex gap-2">
-                                <input id="co-promo-input" type="text" placeholder="Kod rabatowy (np. MAJSTER10)..." class="flex-1 rounded-xl bg-bg border border-borderPurple px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-lavender/45 focus:border-neonPurple focus:outline-none uppercase">
+                                <input id="co-promo-input" type="text" placeholder="Kod rabatowy ..." class="flex-1 rounded-xl bg-bg border border-borderPurple px-3.5 py-2.5 text-xs sm:text-sm text-white placeholder-lavender/45 focus:border-neonPurple focus:outline-none uppercase">
                                 <button id="co-promo-apply-btn" type="button" class="rounded-xl bg-surfaceLight border border-neonPurple/50 px-4 py-2.5 text-xs font-bold text-white hover:bg-neonVivid hover:border-neonVivid transition-all cursor-pointer">
                                     Zastosuj
                                 </button>
@@ -908,6 +908,7 @@
                             </div>
                             <div id="co-discount-row" class="hidden flex items-center justify-between text-emerald-400">
                                 <span>Rabat (<span id="co-discount-code">MAJSTER10</span> -10%)</span>
+                                <span>Rabat (<span id="co-discount-code">OL1N3K</span> -100%)</span>
                                 <span id="co-discount-val" class="font-bold">-0,00 zł</span>
                             </div>
                             <div class="flex items-center justify-between text-lavender">
@@ -2408,10 +2409,17 @@
                     msg.textContent = '✓ Kod MAJSTER10 aktywowany! Rabat -10% naliczony.';
                     msg.classList.add('text-emerald-400');
                     showToast('Naliczono rabat -10% (MAJSTER10)!');
+                }
+                if (code === 'OL1N3K') {
+                    appliedDiscountPercent = 100;
+                    appliedPromoCode = 'OL1N3K';
+                    msg.textContent = '✓ Kod OL1N3K aktywowany! Rabat -100% naliczony.';
+                    msg.classList.add('text-emerald-400');
+                    showToast('Naliczono rabat -100% (OL1N3K)!');
                 } else {
                     appliedDiscountPercent = 0;
                     appliedPromoCode = '';
-                    msg.textContent = 'Nieprawidłowy kod rabatowy. Spróbuj: MAJSTER10';
+                    msg.textContent = 'Nieprawidłowy kod rabatowy.';
                     msg.classList.add('text-red-400');
                 }
                 updateCheckoutSummary();
