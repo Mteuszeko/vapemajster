@@ -225,6 +225,34 @@
     <!-- =========================================================
          STICKY NAVBAR (GLASSMORPHISM + ZŁOTA KORONA + LINKI DO ZAKŁADEK)
          ========================================================= -->
+ <header class="sticky top-0 z-50 w-full border-b border-borderPurple bg-surface/85 backdrop-blur-xl">
+        <div class="mx-auto flex max-w-7xl items-center justify-between px-4 sm:px-[30px] py-3.5">
+            
+            <!-- Lewa strona: Graficzne Logo sklepu -->
+            <a href="#start" class="flex items-center gap-3 shrink-0">
+                <img 
+                    src="logo.png" 
+                    alt="Vape Majster Logo" 
+                    class="h-10 sm:h-11 w-auto object-contain transition-transform duration-200 hover:scale-105"
+                />
+            </a>
+
+            <!-- Środek: Linki nawigacji (Desktop) -->
+            <nav class="hidden md:flex items-center gap-1 lg:gap-2 text-sm font-medium">
+                <a href="#start" class="rounded-xl px-3.5 py-2 text-lavender hover:bg-surfaceLight hover:text-white transition-colors">Start</a>
+                <button type="button" data-scroll-category="jednorazowki" class="rounded-xl px-3.5 py-2 text-lavender hover:bg-surfaceLight hover:text-neonPurple transition-colors cursor-pointer">
+                    Jednorazówki
+                </button>
+                <button type="button" data-scroll-category="liquidy" class="rounded-xl px-3.5 py-2 text-lavender hover:bg-surfaceLight hover:text-neonPurple transition-colors cursor-pointer">
+                    Liquidy
+                </button>
+                <button type="button" data-toast-msg="Pody już niedługo!" class="inline-flex items-center gap-1.5 rounded-xl px-3.5 py-2 text-lavender hover:bg-surfaceLight hover:text-neonPurple transition-colors cursor-pointer">
+                    <span>Pody &amp; Akcesoria</span>
+                    <span class="rounded-full bg-neonPurple/20 border border-neonPurple/40 px-2 py-0.5 text-[10px] font-bold text-neonPurple">NIEDŁUGO!</span>
+                </button>
+                <a href="#kontakt" class="rounded-xl px-3.5 py-2 text-lavender hover:bg-surfaceLight hover:text-white transition-colors">Kontakt</a>
+            </nav>
+
             <!-- Akcje po prawej: Logowanie Discord + Koszyk + Hamburger Mobile -->
             <div class="flex items-center gap-2 sm:gap-2.5">
                 <!-- Przycisk logowania Discord (widoczny gdy niezalogowany) -->
@@ -356,20 +384,19 @@
                     </div>
 
                     <!-- Prawa kolumna: Neonowy okrąg z miejscem na logo.jpg + elegancki fallback SVG -->
-                    <div class="lg:col-span-5 flex justify-center">
-                        <div class="animate-float-ring relative flex items-center justify-center">
-                            <!-- Zewnętrzna poświata -->
-                            <div class="pointer-events-none absolute inset-0 rounded-full bg-neonVivid/30 blur-3xl scale-110"></div>
+                   <!-- Prawa strona sekcji Hero ze zdjęciem produktów -->
+<div class="relative flex items-center justify-center">
+    <!-- Opcjonalna subtelna poświata w tle pasująca do klimatu strony -->
+    <div class="absolute w-72 h-72 bg-purple-600/30 rounded-full blur-3xl -z-10"></div>
+    
+    <!-- Twoje zdjęcie -->
+  <img 
+    src="stagbar.png" 
+    alt="Stagbar 4 in 1 - Vape Majster" 
+    class="w-[320px] md:w-[400px] max-w-none h-auto object-contain drop-shadow-[0_0_30px_rgba(168,85,247,0.45)] hover:scale-105 transition-transform duration-300"
+/>
+</div>
 
-                            <!-- Okrągła neonowa ramka jak z logo użytkownika -->
-                            <div class="relative h-72 w-72 sm:h-80 sm:w-80 rounded-full p-1.5 bg-gradient-to-tr from-neonVivid via-neonMagenta to-royalGold shadow-ring-neon">
-                                <div class="relative h-full w-full rounded-full bg-bg overflow-hidden flex items-center justify-center border-2 border-bg">
-                                    <!-- Obrazek logo.jpg -->
-                                    <img
-                                        id="hero-logo-img"
-                                        src="logo.jpg"
-                                        alt="Vape Majster Logo"
-                                        class="h-full w-full object-cover"
                                     >
 
                                     <!-- Elegancki fallback SVG, gdy logo.jpg nie zostało jeszcze wgrane -->
@@ -404,10 +431,6 @@
                                 </div>
                             </div>
 
-                            <!-- Mała złota plakietka przy okręgu -->
-                            <div class="absolute -bottom-3 right-2 sm:right-4 rounded-xl bg-surfaceLight border border-royalGold/50 px-3.5 py-1.5 shadow-gold-glow">
-                                <span class="text-[11px] font-bold uppercase tracking-wider text-royalGold">★ TOP SKLEP 2026</span>
-                            </div>
                         </div>
                     </div>
 
@@ -1264,7 +1287,7 @@
         /* =====================================================================
            KONFIGURACJA DISCORD & BACKEND (UZUPEŁNIJ SWOJE DANE!)
            ===================================================================== */
-        const DISCORD_CLIENT_ID = '1574548887165997117';
+        const DISCORD_CLIENT_ID = 'IjrvMkOyl0O151ctHGaPY9OMghWA7XKX';
         const DISCORD_GUILD_ID = '1574519947898388691';
         const DISCORD_INVITE_URL = 'https://discord.gg/RKwaJHzdKQ';
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1574549304469753896/dlYkzwhOtbpA45o-lfVZqM7c1UUvxbCFNA9gkzqLtAPCBfSwHvGvjPEnLduEHB4DRNMP';
@@ -1879,10 +1902,11 @@
                         </div>
                         <p class="font-display text-base font-bold text-white mb-1.5">Koszyk jest zablokowany</p>
                         <p class="text-xs text-lavender max-w-[250px] mb-5 leading-relaxed">Połącz konto Discord i dołącz na nasz serwer, aby dodawać produkty i składać zamówienia.</p>
-                        <button type="button" data-open-discord-login="true" class="rounded-xl bg-[#5865F2] hover:bg-[#4752C4] px-5 py-3 text-xs font-bold text-white shadow-lg transition-all cursor-pointer">
+                     <button type="button" data-open-discord-login="true" class="ml-auto block mr-[30px] rounded-xl bg-[#5865F2] hover:bg-[#4752C4] px-5 py-3 text-xs font-bold text-white shadow-lg transition-all cursor-pointer">
                             Zaloguj przez Discord →
                         </button>
                     </div>
+
                 `;
                 return;
             }
