@@ -1157,7 +1157,8 @@
            BAZA PRODUKTÓW VAPE MAJSTER
            ===================================================================== */
         const PRODUCTS = [
-            { id: 101, name: 'Stag Bar 80000 4w1', category: 'jednorazowki', description: 'Jednorazówka z firmy Stag Bar, posiadająca 4 smaki oraz ponad 80,000 zaciągnięć.', tags: ['80000 buchów', '50mg'], price: 80.00, badge: 'BESTSELLER', accent: '#b026ff', secondary: '#c026d3', svgType: 'disposable' },
+           const PRODUCTS = [
+            { id: 101, name: 'Stag Bar 80000 4w1', image: 'stagbarprodukt.png', category: 'jednorazowki', description: 'Jednorazówka z firmy Stag Bar, posiadająca 4 smaki oraz ponad 80,000 zaciągnięć.', tags: ['80000 buchów', '50mg'], price: 80.00, badge: 'BESTSELLER', accent: '#b026ff', secondary: '#c026d3', svgType: 'disposable' },
             { id: 102, name: 'Blue Razz Lemonade', category: 'jednorazowki', description: 'Orzeźwiająca lemoniada cytrynowa z soczystą niebieską maliną.', tags: ['800 buchów', '20mg Sól'], price: 29.00, badge: 'HIT', accent: '#38bdf8', secondary: '#818cf8', svgType: 'disposable' },
             { id: 103, name: 'Watermelon Freeze', category: 'jednorazowki', description: 'Słodki, chrupiący arbuz przełamany arktyczną falą chłodu.', tags: ['2000 buchów', '20mg Sól'], price: 39.00, badge: 'HIT', accent: '#fb7185', secondary: '#f43f5e', svgType: 'disposable' },
             { id: 104, name: 'Mango Peach Ice', category: 'jednorazowki', description: 'Egzotyczne, dojrzałe mango połączone z aksamitną brzoskwinią i lodem.', tags: ['800 buchów', '20mg Sól'], price: 29.00, badge: '', accent: '#fbbf24', secondary: '#f97316', svgType: 'disposable' },
@@ -1435,7 +1436,11 @@
             return { subtotal, discountAmount, shipping, finalTotal: afterDiscount + shipping };
         }
 
-        function getProductSVG(product, prefix = 'g') {
+     function getProductSVG(product, prefix = 'g') {
+            if (product.image) {
+                return `<img src="${product.image}" alt="${product.name}" class="h-36 w-auto max-w-[85%] object-contain transition-transform duration-300 group-hover:scale-105 drop-shadow-[0_12px_18px_rgba(0,0,0,0.7)]" />`;
+            }
+
             const c1 = product.accent;
             const c2 = product.secondary || '#a855f7';
             const uid = prefix + '-' + product.id;
