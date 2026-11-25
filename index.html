@@ -1112,17 +1112,71 @@
             if (sec) sec.scrollIntoView({ behavior: 'smooth', block: 'start' });
         }
 
+     function getFlavorStock(product, flavorName) {
+            if (Array.isArray(product.flavors) && product.flavors.length > 0) {
+                const found = product.flavors.find(f => (typeof f === 'object' ? f.name : f) === flavorName);
+                if (found && typeof found === 'object' && typeof found.stock === 'number') {
+                    return Math.max(0, found.stock);
+                }
+            }
+            return typeof product.stock === 'number' ? Math.max(0, product.stock) : 10;
+        }
+
+        function updateCardStockUI(productId) {
+            const product = PRODUCTS.find(p => p.id === productId);
+            if (!product) return;
+
+            const selectEl = document.getElementById(`flavor-${productId}`);
+            const selectedFlavor = selectEl ? selectEl.value : '';
+            const currentStock = getFlavorStock(product, selectedFlavor);
+            const isOut = currentStock <= 0;
+
+            const stockBadge = document.querySelector(`[data-stock-badge="${productId}"]`);
+            if (stockBadge) {
+                stockBadge.className = isOut
+                    ? 'absolute top-3 right-3 z-10 rounded-lg bg-red-500/20 border border-red-500/50 px-2 py-1 text-[10px] font-extrabold text-red-300 backdrop-blur-sm'
+                    : 'absolute top-3 right-3 z-10 rounded-lg bg-bg/85 border border-neonPurple/40 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm';
+                stockBadge.textContent = `${isOut ? 0 : currentStock} szt.`;
+            }
+
+            const addBtn = document.querySelector(`[data-add-cart="${productId}"]`);
+            if (addBtn) {
+                if (isOut) {
+                    addBtn.disabled = true;
+                    addBtn.textContent = 'Wyprzedane';
+                    addBtn.className = 'add-to-cart-btn rounded-xl bg-surfaceLight/60 border border-borderPurple px-3.5 py-2.5 text-xs font-bold text-lavender/50 opacity-60 cursor-not-allowed';
+                } else {
+                    addBtn.disabled = false;
+                    addBtn.textContent = 'Do koszyka';
+                    addBtn.className = 'add-to-cart-btn rounded-xl bg-surfaceLight border border-neonPurple/45 px-3.5 py-2.5 text-xs font-bold text-white transition-all duration-200 hover:bg-gradient-to-r hover:from-neonVivid hover:to-neonMagenta hover:border-transparent hover:shadow-purple-glow-sm active:scale-95 cursor-pointer';
+                }
+            }
+        }
+
         function renderProducts() {
             const grid = document.getElementById('product-grid');
             if (!grid) return;
             const filtered = activeCategory === 'all' ? PRODUCTS : PRODUCTS.filter(p => p.category === activeCategory);
 
             grid.innerHTML = filtered.map(product => {
-const stockCount = typeof product.stock === 'number' ? product.stock : 10;
-                const isSoldOut = stockCount <= 0 || product.badge === 'WYPRZEDANE';
-                const effectiveBadge = isSoldOut ? 'WYPRZEDANE' : product.badge;
+                const hasFlavors = Array.isArray(product.flavors) && product.flavors.length > 0;
+                const normalizedFlavors = hasFlavors
+                    ? product.flavors.map(f => typeof f === 'object'
+                        ? { name: f.name, stock: typeof f.stock === 'number' ? Math.max(0, f.stock) : 10 }
+                        : { name: f, stock: typeof product.stock === 'number' ? Math.max(0, product.stock) : 10 })
+                    : [];
 
-           let badgeHTML = '';
+                const allFlavorsOut = hasFlavors && normalizedFlavors.every(f => f.stock <= 0);
+                const firstAvailable = normalizedFlavors.find(f => f.stock > 0) || normalizedFlavors[0];
+                const initialStock = hasFlavors
+                    ? (firstAvailable ? firstAvailable.stock : 0)
+                    : (typeof product.stock === 'number' ? Math.max(0, product.stock) : 10);
+
+                const isCompletelySoldOut = (hasFlavors ? allFlavorsOut : initialStock <= 0) || product.badge === 'WYPRZEDANE';
+                const isInitialFlavorOut = initialStock <= 0 || isCompletelySoldOut;
+                const effectiveBadge = isCompletelySoldOut ? 'WYPRZEDANE' : product.badge;
+
+                let badgeHTML = '';
                 if (effectiveBadge === 'WYPRZEDANE') {
                     badgeHTML = `<span class="absolute top-3 left-3 z-10 inline-flex items-center rounded-lg bg-zinc-700/40 border border-zinc-500/40 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-zinc-300 backdrop-blur-sm">${effectiveBadge}</span>`;
                 } else if (effectiveBadge === 'BESTSELLER' || effectiveBadge === 'HIT') {
@@ -1130,21 +1184,23 @@ const stockCount = typeof product.stock === 'number' ? product.stock : 10;
                 } else if (effectiveBadge === 'NOWOŚĆ') {
                     badgeHTML = `<span class="absolute top-3 left-3 z-10 rounded-lg bg-neonVivid/20 border border-neonPurple/50 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-neonPurple">${effectiveBadge}</span>`;
                 }
-                const stockBadgeHTML = isSoldOut
-                    ? `<span class="absolute top-3 right-3 z-10 rounded-lg bg-red-500/20 border border-red-500/50 px-2 py-1 text-[10px] font-extrabold text-red-300 backdrop-blur-sm">0 szt.</span>`
-                    : `<span class="absolute top-3 right-3 z-10 rounded-lg bg-bg/85 border border-neonPurple/40 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">${stockCount} szt.</span>`;
+
+                const stockBadgeHTML = isInitialFlavorOut
+                    ? `<span data-stock-badge="${product.id}" class="absolute top-3 right-3 z-10 rounded-lg bg-red-500/20 border border-red-500/50 px-2 py-1 text-[10px] font-extrabold text-red-300 backdrop-blur-sm">0 szt.</span>`
+                    : `<span data-stock-badge="${product.id}" class="absolute top-3 right-3 z-10 rounded-lg bg-bg/85 border border-neonPurple/40 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">${initialStock} szt.</span>`;
 
                 const tagsHTML = product.tags.map(tag => `<span class="rounded-md bg-bg border border-borderPurple px-2 py-0.5 text-[10px] font-semibold text-lavender">${tag}</span>`).join('');
-                const flavorsHTML = (product.flavors && product.flavors.length > 0)
-                    ? `<div class="mb-4"><select id="flavor-${product.id}" ${isSoldOut ? 'disabled' : ''} class="w-full rounded-xl bg-bg border border-borderPurple px-3 py-2.5 text-xs font-semibold text-white focus:border-neonPurple focus:outline-none ${isSoldOut ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}">${product.flavors.map(f => `<option value="${f}" class="bg-surface text-white">Smak: ${f}</option>`).join('')}</select></div>`
+
+                const flavorsHTML = hasFlavors
+                    ? `<div class="mb-4"><select id="flavor-${product.id}" onchange="updateCardStockUI(${product.id})" ${isCompletelySoldOut ? 'disabled' : ''} class="w-full rounded-xl bg-bg border border-borderPurple px-3 py-2.5 text-xs font-semibold text-white focus:border-neonPurple focus:outline-none ${isCompletelySoldOut ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}">${normalizedFlavors.map(f => `<option value="${f.name}" ${firstAvailable && f.name === firstAvailable.name ? 'selected' : ''} class="bg-surface text-white">Smak: ${f.name} (${f.stock} szt.)</option>`).join('')}</select></div>`
                     : '';
 
-                const addBtnHTML = isSoldOut
+                const addBtnHTML = isInitialFlavorOut
                     ? `<button type="button" disabled data-add-cart="${product.id}" class="add-to-cart-btn rounded-xl bg-surfaceLight/60 border border-borderPurple px-3.5 py-2.5 text-xs font-bold text-lavender/50 opacity-60 cursor-not-allowed">Wyprzedane</button>`
                     : `<button type="button" data-add-cart="${product.id}" class="add-to-cart-btn rounded-xl bg-surfaceLight border border-neonPurple/45 px-3.5 py-2.5 text-xs font-bold text-white transition-all duration-200 hover:bg-gradient-to-r hover:from-neonVivid hover:to-neonMagenta hover:border-transparent hover:shadow-purple-glow-sm active:scale-95 cursor-pointer">Do koszyka</button>`;
 
                 return `
-                    <article class="group flex flex-col justify-between rounded-2xl bg-surface border border-borderPurple p-4 transition-all duration-300 ${isSoldOut ? 'opacity-85' : 'hover:-translate-y-1.5 hover:border-neonPurple/70 hover:shadow-purple-glow-sm'}">
+                    <article class="group flex flex-col justify-between rounded-2xl bg-surface border border-borderPurple p-4 transition-all duration-300 ${isCompletelySoldOut ? 'opacity-85' : 'hover:-translate-y-1.5 hover:border-neonPurple/70 hover:shadow-purple-glow-sm'}">
                         <div>
                             <div class="relative mb-4 flex h-48 items-center justify-center rounded-xl bg-surfaceLight border border-borderPurple/80 overflow-hidden">
                                 ${badgeHTML}
@@ -1153,7 +1209,7 @@ const stockCount = typeof product.stock === 'number' ? product.stock : 10;
                                 ${getProductSVG(product, 'grid')}
                             </div>
                             <div class="flex flex-wrap items-center gap-1.5 mb-2.5">${tagsHTML}</div>
-                            <h3 class="font-display text-base font-bold text-white leading-snug mb-1.5 ${isSoldOut ? '' : 'group-hover:text-neonPurple transition-colors'}">${product.name}</h3>
+                            <h3 class="font-display text-base font-bold text-white leading-snug mb-1.5 ${isCompletelySoldOut ? '' : 'group-hover:text-neonPurple transition-colors'}">${product.name}</h3>
                             <p class="text-xs text-lavender leading-relaxed mb-4">${product.description}</p>
                             ${flavorsHTML}
                         </div>
@@ -1163,56 +1219,36 @@ const stockCount = typeof product.stock === 'number' ? product.stock : 10;
                         </div>
                     </article>
                 `;
-
-                return `
-                    <article class="group flex flex-col justify-between rounded-2xl bg-surface border border-borderPurple p-4 transition-all duration-300 hover:-translate-y-1.5 hover:border-neonPurple/70 hover:shadow-purple-glow-sm">
-                        <div>
-                            <div class="relative mb-4 flex h-48 items-center justify-center rounded-xl bg-surfaceLight border border-borderPurple/80 overflow-hidden">
-                                ${badgeHTML}
-                                <div class="pointer-events-none absolute h-28 w-28 rounded-full opacity-20 blur-2xl transition-opacity duration-300 group-hover:opacity-40" style="background-color: ${product.accent}"></div>
-                                ${getProductSVG(product, 'grid')}
-                            </div>
-                            <div class="flex flex-wrap items-center gap-1.5 mb-2.5">${tagsHTML}</div>
-                            <h3 class="font-display text-base font-bold text-white leading-snug mb-1.5 group-hover:text-neonPurple transition-colors">${product.name}</h3>
-                            <p class="text-xs text-lavender leading-relaxed mb-4">${product.description}</p>
-                            ${flavorsHTML}
-                        </div>
-                        <div class="pt-3.5 border-t border-borderPurple/80 flex items-center justify-between gap-3">
-                            <span class="font-display text-lg font-bold text-white">${formatPrice(product.price)}</span>
-                            <button type="button" data-add-cart="${product.id}" class="add-to-cart-btn rounded-xl bg-surfaceLight border border-neonPurple/45 px-3.5 py-2.5 text-xs font-bold text-white transition-all duration-200 hover:bg-gradient-to-r hover:from-neonVivid hover:to-neonMagenta hover:border-transparent hover:shadow-purple-glow-sm active:scale-95 cursor-pointer">Do koszyka</button>
-                        </div>
-                    </article>
-                `;
             }).join('');
         }
 
-function addToCart(productId) {
+        function addToCart(productId) {
             if (!requireDiscordAuth()) return;
             const product = PRODUCTS.find(p => p.id === productId);
             if (!product) return;
-            const stockCount = typeof product.stock === 'number' ? product.stock : 10;
-            if (stockCount <= 0 || product.badge === 'WYPRZEDANE') {
-                showToast(`${product.name} jest obecnie wyprzedane!`);
-                return;
-            }
 
             const flavorSelect = document.getElementById(`flavor-${productId}`);
             const selectedFlavor = flavorSelect ? flavorSelect.value : '';
+            const stockCount = getFlavorStock(product, selectedFlavor);
+
+            if (stockCount <= 0) {
+                showToast(`${selectedFlavor || product.name} jest obecnie wyprzedane!`);
+                return;
+            }
+
             const cartItemId = selectedFlavor ? `${productId}-${selectedFlavor}` : String(productId);
             const displayName = selectedFlavor ? `${product.name} (${selectedFlavor})` : product.name;
 
             const existing = cart.find(item => String(item.id) === cartItemId);
-            const totalInCartForProduct = cart
-                .filter(i => String(i.id) === String(productId) || String(i.id).startsWith(`${productId}-`))
-                .reduce((s, i) => s + i.qty, 0);
+            const currentQtyInCart = existing ? existing.qty : 0;
 
-            if (totalInCartForProduct >= stockCount) {
-                showToast(`Maksymalnie dostępnych sztuk dla ${product.name}: ${stockCount}!`);
+            if (currentQtyInCart >= stockCount) {
+                showToast(`Maksymalnie dostępnych sztuk dla tego smaku: ${stockCount}!`);
                 return;
             }
 
             if (existing) existing.qty += 1;
-            else cart.push({ ...product, baseId: productId, id: cartItemId, name: displayName, qty: 1 });
+            else cart.push({ ...product, baseId: productId, flavor: selectedFlavor, id: cartItemId, name: displayName, qty: 1 });
 
             saveCart();
             updateCartUI();
@@ -1228,15 +1264,19 @@ function addToCart(productId) {
             if (delta > 0) {
                 const baseId = item.baseId || parseInt(String(item.id).split('-')[0], 10);
                 const product = PRODUCTS.find(p => p.id === baseId);
-                const stockCount = product ? (typeof product.stock === 'number' ? product.stock : 10) : 10;
-                const totalInCartForProduct = cart
-                    .filter(i => String(i.id) === String(baseId) || String(i.id).startsWith(`${baseId}-`))
-                    .reduce((s, i) => s + i.qty, 0);
-                if (totalInCartForProduct >= stockCount) {
-                    showToast(`Więcej sztuk tego produktu nie mamy na stanie (${stockCount} szt.).`);
+                const stockCount = product ? getFlavorStock(product, item.flavor || '') : 10;
+                if (item.qty >= stockCount) {
+                    showToast(`Więcej sztuk tego smaku nie mamy na stanie (${stockCount} szt.).`);
                     return;
                 }
             }
+
+            item.qty += delta;
+            if (item.qty <= 0) cart = cart.filter(i => String(i.id) !== String(productId));
+            saveCart();
+            updateCartUI();
+            updateCheckoutSummary();
+        }
 
             item.qty += delta;
             if (item.qty <= 0) cart = cart.filter(i => String(i.id) !== String(productId));
