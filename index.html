@@ -790,15 +790,134 @@
         const DISCORD_WEBHOOK_URL = 'https://discord.com/api/webhooks/1574549304469753896/dlYkzwhOtbpA45o-lfVZqM7c1UUvxbCFNA9gkzqLtAPCBfSwHvGvjPEnLduEHB4DRNMP';
         const WORKER_API_URL = 'https://bot.vapemajster.workers.dev';
 
-        const PRODUCTS = [
-            { id: 101, name: 'Stag Bar 80000 4w1', image: 'stagbarprodukt.png', category: 'jednorazowki', stock: 10, description: 'Poznaj przyszłość jednorazowego waporyzacji dzięki Stag Bar 80000 — potężnemu urządzeniu, które pozwala przełączać się pomiędzy czterema najwyższej jakości smakami w jednym urządzeniu, wspieranym przez inteligentny wyświetlacz LED i ogromny zbiornik na e-liquid o pojemności 72 ml.', tags: ['80K buchów', '50mg'], flavors: ['Lody jagodowe i mieszane jagody oraz lody Blue Razz i lody jagodowe i malinowe', 'Lód truskawkowy & Truskawka Kiwi i Truskawka Winogrono i Truskawka Malinowo Wiśniowy Lód', 'Wiśniowy lód i Blue Razz Wiśniowa i wiśniowo-pechowa lemoniada i wiśniowa cola', 'Lód jagodowy i lód truskawkowy i lód arbuzowy i lód wiśniowy', 'Truskawka Malina Wiśnia Lód i Potrójny Melon i Ananas Banan Truskawka i Kiwi Marakuja Gujawa','Blue Razz Fusion & Pineapple Coconut Ice & Pink Lemonade & Strawberry Watermelon Fusion','Brzoskwinia Mango Ananas i Soczysta Brzoskwinia i Cytryna Limonka i Potrójne Mango','Mr Blue & Blueberry Raspberry Lód & Truskawka Kiwi & Borówka Wiśnia Żurawina','Banan Truskawka & Truskawka Winogrono & Red Bull & Podwójne Jabłko','Cytryna Limonka i Truskawka Kiwi i Mięta Lód i Smoczy Owoc Banan Wiśnia','Coco Loco & Ananas Banan Melon & Wiśnia Chupachups & Wiśniowy Banan','Sex On The Beach, Coco Loco i smoczy owoc, banan, wiśnia i cytryna, limonka','Love 66 i wiśniowe chupachupy, arbuzowy, malinowy lód i truskawkowy kiwi','Cola Ice i Red Bull, Seks na plaży i melon ananasowo-bananowy','Mrożona mięta i cytrynowe mojito oraz limonka, jabłko, mięta i winogrono z miętą','Red Bull i szalone jagody oraz tropikalne cytrusy gazowane i Fanta','Winogrono z maliną i aloes, czarna porzeczka oraz różowy wybuch i truskawkowy cukierek'], price: 79.99, badge: 'BESTSELLER', accent: '#b026ff', secondary: '#c026d3', svgType: 'disposable' },
-            { id: 102, name: 'Bang King 250000 4w1', category: 'jednorazowki', stock: 10, image: 'bangking250000.png', description: 'Doświadcz niespotykanej wytrzymałości podczas wapowania dzięki Bang King 250000 — urządzeniu, które na nowo definiuje to, co może dostarczyć pojedynczy jednorazowy waporyzator, łącząc cztery różne profile smakowe w jednym elegancko zaprojektowanym urządzeniu.', tags: ['250K buchów', '50mg'], flavors: ['Cytryna Limonka i Arbuz Lód i Czarny Lodowy Smoczy Owoc Truskawka i Miłość 66','Cytrynowo-limonkowy i truskawkowy, malinowy arbuz i musująca wiśnia','Waniliowa cola i cytrynowa brzoskwinia i truskawka, malina, wiśnia i lód winogronowy','Różowa lemoniada i kiwi, marakuja, gujawa, brzoskwinia, jagody i truskawka, banan','Winogrono, lód z liczi, brzoskwinia, jagody i kiwi, marakuja, gujawa','Strawberry Mango & Blue Razz Lemonade & Vanilla Ice Cream & Sour Triple Berry','Lód arbuzowy i truskawkowy Mango i jagodowy Lód i musująca wiśnia','Mieszanka jagód i wiśni, cytryny i truskawek, kiwi i truskawek, arbuzowa guma balonowa','Strawberry Watermelon & Cherry Cola & Juicy Peach Ice & Grapefruit Refresher','Mojito & Monster Mango & Lady Killer & Pink Lemonade'] , price: 99.99, badge: 'HIT', accent: '#38bdf8', secondary: '#818cf8', svgType: 'disposable' },
-            { id: 103, name: 'Bang Legend 300000 8w1', category: 'jednorazowki', stock: 10, image: 'banglegend300000.png', description: '✨ Poznaj Bang Legend 300000, flagowe urządzenie smakowe 8 w 1 stworzone dla osób, które kochają różnorodność i nie chcą nosić kilku e-papierosów. 🍓 Cztery niezależne komory, grzałka siatkowa i inteligentny ekran LED.', tags: ['300K buchów', '8 w 1', '50mg'], flavors: ['Mamba i brzoskwinia, mango, arbuz, napój energetyczny i lód winogronowy','Marakuja Mango i brzoskwinia Ananas i jagoda Malina i lód arbuzowy','Lód cytrynowy, kwaśna pomarańcza i mango, brzoskwinia i arbuz oraz lód jagodowy','Jabłko Gruszka & Truskawka Mango & Truskawka Arbuz & Lody Borówkowe','Arbuz Jagoda i Mango Brzoskwinia Morela i Truskawka Kiwi i Brzoskwinia Mango Arbuz','Summer Time & Mango Ice & Love 66 & Sour Mango Pincapple','Kiwi Marakuja Guawa & Winogrono Lód & Namiętny Pocałunek & Brzoskwinia','Arbuz Pitaja i jabłko Gruszka i marakuja Kiwi Limonka i jagoda Brzoskwinia Lód','Truskawka Banan i Arbuz Jagoda i Lody Jagodowe i Lody Fuji','Żelek Miś i Mieszanka Berrie, Truskawka, Arbuz i Romans Limonkowy','Arbuzowa guma balonowa i jagoda brzoskwiniowa, kantalupa, jabłko i truskawka, banan','Arbuz Kwaśna Brzoskwinia i Lody Jagodowe oraz Wiśnia Kalifornijska i Truskawka Mango'], price: 129.99, badge: '', accent: '#fb7185', secondary: '#f43f5e', svgType: 'disposable' },
-            { id: 104, name: 'UOR Twins 80000 80K Puffs 2w1', category: 'jednorazowki', stock: 0, image:'UORTwins80K.png', description: '🌟 UOR Twins 80000 to nie tylko jednorazowy waporyzator — to potężny waporyzator o dwóch smakach, zaprojektowany z myślą o waporyzatorach, którzy nie chcą iść na kompromis w zakresie różnorodności i długowieczności. Dzięki przełomowej w branży pojemności zaciągnięć wynoszącej 80 tys.', tags: ['80K buchów', '50mg'], flavors: ['Borówka Malina i Miłość 66','Blue Razz Ice & Kiwi Gujawa z marakuji','Lody jagodowe i Lady Killa','Lód winogronowy i lód z potrójnymi jagodami','Soda pomarańczowa i owoce tropikalne','Brzoskwiniowo-mango i lód truskawkowy','Truskawkowe Kiwi i Mieszane Jagody','Truskawkowy Arbuz I Red Bull','Truskawka z bananem & Truskawka z mango','Arbuzowy lód i podwójne jabłko'], price: 64.99, badge: 'WYPRZEDANE', accent: '#fbbf24', secondary: '#f97316', svgType: 'disposable' },
-            { id: 201, name: 'LIQUID 1', category: 'liquidy', stock: 0, description: 'NIEDLUGO.', tags: ['10ml', '20mg Sól'], price: 22.00, badge: 'BESTSELLER', accent: '#a855f7', secondary: '#ec4899', svgType: 'liquid' },
-          
+       const PRODUCTS = [
+            {
+                id: 101,
+                name: 'Stag Bar 80000 4w1',
+                image: 'stagbarprodukt.png',
+                category: 'jednorazowki',
+                stock: 17,
+                description: 'Poznaj przyszłość jednorazowego waporyzacji dzięki Stag Bar 80000 — potężnemu urządzeniu, które pozwala przełączać się pomiędzy czterema najwyższej jakości smakami w jednym urządzeniu, wspieranym przez inteligentny wyświetlacz LED i ogromny zbiornik na e-liquid o pojemności 72 ml.',
+                tags: ['80K buchów', '50mg'],
+                flavors: [
+                    { name: 'Lody jagodowe i mieszane jagody oraz lody Blue Razz i lody jagodowe i malinowe', stock: 1 },
+                    { name: 'Lód truskawkowy & Truskawka Kiwi i Truskawka Winogrono i Truskawka Malinowo Wiśniowy Lód', stock: 1 },
+                    { name: 'Wiśniowy lód i Blue Razz Wiśniowa i wiśniowo-pechowa lemoniada i wiśniowa cola', stock: 1 },
+                    { name: 'Lód jagodowy i lód truskawkowy i lód arbuzowy i lód wiśniowy', stock: 1 },
+                    { name: 'Truskawka Malina Wiśnia Lód i Potrójny Melon i Ananas Banan Truskawka i Kiwi Marakuja Gujawa', stock: 1 },
+                    { name: 'Blue Razz Fusion & Pineapple Coconut Ice & Pink Lemonade & Strawberry Watermelon Fusion', stock: 1 },
+                    { name: 'Brzoskwinia Mango Ananas i Soczysta Brzoskwinia i Cytryna Limonka i Potrójne Mango', stock: 1 },
+                    { name: 'Mr Blue & Blueberry Raspberry Lód & Truskawka Kiwi & Borówka Wiśnia Żurawina', stock: 1 },
+                    { name: 'Banan Truskawka & Truskawka Winogrono & Red Bull & Podwójne Jabłko', stock: 1 },
+                    { name: 'Cytryna Limonka i Truskawka Kiwi i Mięta Lód i Smoczy Owoc Banan Wiśnia', stock: 1 },
+                    { name: 'Coco Loco & Ananas Banan Melon & Wiśnia Chupachups & Wiśniowy Banan', stock: 1 },
+                    { name: 'Sex On The Beach, Coco Loco i smoczy owoc, banan, wiśnia i cytryna, limonka', stock: 1 },
+                    { name: 'Love 66 i wiśniowe chupachupy, arbuzowy, malinowy lód i truskawkowy kiwi', stock: 1 },
+                    { name: 'Cola Ice i Red Bull, Seks na plaży i melon ananasowo-bananowy', stock: 1 },
+                    { name: 'Mrożona mięta i cytrynowe mojito oraz limonka, jabłko, mięta i winogrono z miętą', stock: 1 },
+                    { name: 'Red Bull i szalone jagody oraz tropikalne cytrusy gazowane i Fanta', stock: 1 },
+                    { name: 'Winogrono z maliną i aloes, czarna porzeczka oraz różowy wybuch i truskawkowy cukierek', stock: 1 }
+                ],
+                price: 79.99,
+                badge: 'BESTSELLER',
+                accent: '#b026ff',
+                secondary: '#c026d3',
+                svgType: 'disposable'
+            },
+            {
+                id: 102,
+                name: 'Bang King 250000 4w1',
+                category: 'jednorazowki',
+                stock: 10,
+                image: 'bangking250000.png',
+                description: 'Doświadcz niespotykanej wytrzymałości podczas wapowania dzięki Bang King 250000 — urządzeniu, które na nowo definiuje to, co może dostarczyć pojedynczy jednorazowy waporyzator, łącząc cztery różne profile smakowe w jednym elegancko zaprojektowanym urządzeniu.',
+                tags: ['250K buchów', '50mg'],
+                flavors: [
+                    { name: 'Cytryna Limonka i Arbuz Lód i Czarny Lodowy Smoczy Owoc Truskawka i Miłość 66', stock: 1 },
+                    { name: 'Cytrynowo-limonkowy i truskawkowy, malinowy arbuz i musująca wiśnia', stock: 1 },
+                    { name: 'Waniliowa cola i cytrynowa brzoskwinia i truskawka, malina, wiśnia i lód winogronowy', stock: 1 },
+                    { name: 'Różowa lemoniada i kiwi, marakuja, gujawa, brzoskwinia, jagody i truskawka, banan', stock: 1 },
+                    { name: 'Winogrono, lód z liczi, brzoskwinia, jagody i kiwi, marakuja, gujawa', stock: 1 },
+                    { name: 'Strawberry Mango & Blue Razz Lemonade & Vanilla Ice Cream & Sour Triple Berry', stock: 1 },
+                    { name: 'Lód arbuzowy i truskawkowy Mango i jagodowy Lód i musująca wiśnia', stock: 1 },
+                    { name: 'Mieszanka jagód i wiśni, cytryny i truskawek, kiwi i truskawek, arbuzowa guma balonowa', stock: 1 },
+                    { name: 'Strawberry Watermelon & Cherry Cola & Juicy Peach Ice & Grapefruit Refresher', stock: 1 },
+                    { name: 'Mojito & Monster Mango & Lady Killer & Pink Lemonade', stock: 1 }
+                ],
+                price: 99.99,
+                badge: 'HIT',
+                accent: '#38bdf8',
+                secondary: '#818cf8',
+                svgType: 'disposable'
+            },
+            {
+                id: 103,
+                name: 'Bang Legend 300000 8w1',
+                category: 'jednorazowki',
+                stock: 12,
+                image: 'banglegend300000.png',
+                description: '✨ Poznaj Bang Legend 300000, flagowe urządzenie smakowe 8 w 1 stworzone dla osób, które kochają różnorodność i nie chcą nosić kilku e-papierosów. 🍓 Cztery niezależne komory, grzałka siatkowa i inteligentny ekran LED.',
+                tags: ['300K buchów', '8 w 1', '50mg'],
+                flavors: [
+                    { name: 'Mamba i brzoskwinia, mango, arbuz, napój energetyczny i lód winogronowy', stock: 1 },
+                    { name: 'Marakuja Mango i brzoskwinia Ananas i jagoda Malina i lód arbuzowy', stock: 1 },
+                    { name: 'Lód cytrynowy, kwaśna pomarańcza i mango, brzoskwinia i arbuz oraz lód jagodowy', stock: 1 },
+                    { name: 'Jabłko Gruszka & Truskawka Mango & Truskawka Arbuz & Lody Borówkowe', stock: 1 },
+                    { name: 'Arbuz Jagoda i Mango Brzoskwinia Morela i Truskawka Kiwi i Brzoskwinia Mango Arbuz', stock: 1 },
+                    { name: 'Summer Time & Mango Ice & Love 66 & Sour Mango Pincapple', stock: 1 },
+                    { name: 'Kiwi Marakuja Guawa & Winogrono Lód & Namiętny Pocałunek & Brzoskwinia', stock: 1 },
+                    { name: 'Arbuz Pitaja i jabłko Gruszka i marakuja Kiwi Limonka i jagoda Brzoskwinia Lód', stock: 1 },
+                    { name: 'Truskawka Banan i Arbuz Jagoda i Lody Jagodowe i Lody Fuji', stock: 1 },
+                    { name: 'Żelek Miś i Mieszanka Berrie, Truskawka, Arbuz i Romans Limonkowy', stock: 1 },
+                    { name: 'Arbuzowa guma balonowa i jagoda brzoskwiniowa, kantalupa, jabłko i truskawka, banan', stock: 1 },
+                    { name: 'Arbuz Kwaśna Brzoskwinia i Lody Jagodowe oraz Wiśnia Kalifornijska i Truskawka Mango', stock: 1 }
+                ],
+                price: 129.99,
+                badge: '',
+                accent: '#fb7185',
+                secondary: '#f43f5e',
+                svgType: 'disposable'
+            },
+            {
+                id: 104,
+                name: 'Bang Box 20k PUFFS',
+                category: 'jednorazowki',
+                stock: 14,
+                image: 'BangBox20K.png',
+                description: 'Szukasz jednorazowego vape, który naprawdę wytrzyma Bang Box 20000 Puffs to 20 tysięcy zaciągnięć w jednym urządzeniu — tygodnie intensywnego użytkowania bez wymiany. Wybierz spośród 12 intensywnych smaków owocowych, z lodem i soczystymi owocami. Bez kart kredytowych, bez ryzyka — płacisz dopiero gdy paczka jest w Twoich rękach.',
+                tags: ['20k buchów', '50mg'],
+                flavors: [
+                    { name: 'Mango on Ice', stock: 2 },
+                    { name: 'Blueberry sour Rasberry ice', stock: 3 },
+                    { name: 'Blue Razz Ice', stock: 1 },
+                    { name: 'Mango Peach', stock: 1 },
+                    { name: 'Strawberry Watermelon', stock: 2 },
+                    { name: 'Watermelon Ice', stock: 1 },
+                    { name: 'Banana Ice', stock: 1 },
+                    { name: 'Kiwi Passion fruit Guava', stock: 1 },
+                    { name: 'Mr Blue', stock: 1 },
+                    { name: 'Rasberry Watermelon', stock: 1 }
+                ],
+                price: 44.99,
+                badge: 'HIT',
+                accent: '#fbbf24',
+                secondary: '#f97316',
+                svgType: 'disposable'
+            },
+            {
+                id: 201,
+                name: 'LIQUID 1',
+                category: 'liquidy',
+                stock: 0,
+                description: 'NIEDLUGO.',
+                tags: ['10ml', '20mg Sól'],
+                price: 22.00,
+                badge: 'BESTSELLER',
+                accent: '#a855f7',
+                secondary: '#ec4899',
+                svgType: 'liquid'
+            }
         ];
-
         const CATEGORY_SUBTITLES = {
             all: 'Wszystkie najpopularniejsze jednorazówki, liquidy oraz pody niedługo w ofercie Vape Majster.',
             jednorazowki: 'Gotowe do działania od razu po wyjęciu z pudełka — soczyste smaki.',
