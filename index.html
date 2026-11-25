@@ -1003,13 +1003,14 @@ const stockCount = typeof product.stock === 'number' ? product.stock : 10;
                 const isSoldOut = stockCount <= 0 || product.badge === 'WYPRZEDANE';
                 const effectiveBadge = isSoldOut ? 'WYPRZEDANE' : product.badge;
 
-                let badgeHTML = '';
-                if (effectiveBadge === 'BESTSELLER' || effectiveBadge === 'HIT' || effectiveBadge === 'WYPRZEDANE') {
+           let badgeHTML = '';
+                if (effectiveBadge === 'WYPRZEDANE') {
+                    badgeHTML = `<span class="absolute top-3 left-3 z-10 inline-flex items-center rounded-lg bg-zinc-700/40 border border-zinc-500/40 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-zinc-300 backdrop-blur-sm">${effectiveBadge}</span>`;
+                } else if (effectiveBadge === 'BESTSELLER' || effectiveBadge === 'HIT') {
                     badgeHTML = `<span class="absolute top-3 left-3 z-10 inline-flex items-center gap-1 rounded-lg bg-royalGold/15 border border-royalGold/50 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-royalGold shadow-gold-glow"><svg class="h-3 w-3" viewBox="0 0 24 24" fill="currentColor"><path d="M5 16L3 5l5.5 5L12 4l3.5 6L21 5l-2 11H5z"/></svg>${effectiveBadge}</span>`;
                 } else if (effectiveBadge === 'NOWOŚĆ') {
                     badgeHTML = `<span class="absolute top-3 left-3 z-10 rounded-lg bg-neonVivid/20 border border-neonPurple/50 px-2.5 py-1 text-[10px] font-extrabold uppercase tracking-wider text-neonPurple">${effectiveBadge}</span>`;
                 }
-
                 const stockBadgeHTML = isSoldOut
                     ? `<span class="absolute top-3 right-3 z-10 rounded-lg bg-red-500/20 border border-red-500/50 px-2 py-1 text-[10px] font-extrabold text-red-300 backdrop-blur-sm">0 szt.</span>`
                     : `<span class="absolute top-3 right-3 z-10 rounded-lg bg-bg/85 border border-neonPurple/40 px-2 py-1 text-[10px] font-bold text-white backdrop-blur-sm">${stockCount} szt.</span>`;
